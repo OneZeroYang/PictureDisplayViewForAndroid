@@ -7,15 +7,23 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 
 public class MyItemTouchHandler extends ItemTouchHelper.Callback {
-      ItemTouchAdapterImpl adapter;    
+      ItemTouchAdapterImpl adapter;
+      private MyItemTouchHandlerCallback callback;
 
       public MyItemTouchHandler(@NonNull ItemTouchAdapterImpl adapter) {
           this.adapter = adapter;    
-      }    
+      }
 
-      /**     
+    public MyItemTouchHandler(@NonNull ItemTouchAdapterImpl adapter,MyItemTouchHandlerCallback callback) {
+        this.adapter = adapter;
+        this.callback=callback;
+    }
+
+    /**
        * 设置 允许拖拽和滑动删除的方向     
        */    
        @Override    
@@ -91,13 +99,26 @@ public class MyItemTouchHandler extends ItemTouchHelper.Callback {
             public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {        
                 if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {            
                    // 拖拽状态            
-                   viewHolder.itemView.setBackgroundColor(Color.BLUE);
+                   //viewHolder.itemView.setBackgroundColor(Color.BLUE);
+                    int width = viewHolder.itemView.getWidth();
+                    if (callback!=null){
+                        callback.onMove(viewHolder,actionState);
+                    }else {
+                        ScaleAnimation animation=new ScaleAnimation(1,1.3f,1,1.3f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+                        animation.setDuration(200);
+                        animation.setFillAfter(true);
+                        viewHolder.itemView.setAnimation(animation);
+                        animation.start();
+                    }
                 }else if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {            
                    // 滑动删除状态            
-                   viewHolder.itemView.setBackgroundColor(Color.RED);       
+                   //viewHolder.itemView.setBackgroundColor(Color.RED);
                 }       
                 super.onSelectedChanged(viewHolder, actionState);    
-            }   
+            }
+
+
+
 
             /**     
              * item取消选中(取消长按)     
@@ -105,7 +126,16 @@ public class MyItemTouchHandler extends ItemTouchHelper.Callback {
              */    
              @Override    
              public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {        
-                viewHolder.itemView.setBackgroundColor(Color.TRANSPARENT);        
+                viewHolder.itemView.setBackgroundColor(Color.TRANSPARENT);
+                if (callback!=null){
+                    callback.onPutDown(recyclerView,viewHolder);
+                }else {
+                    ScaleAnimation animation=new ScaleAnimation(1.3f,1f,1.3f,1f,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+                    animation.setDuration(200);
+                    animation.setFillAfter(true);
+                    viewHolder.itemView.setAnimation(animation);
+                    animation.start();
+                }
                 super.clearView(recyclerView, viewHolder);    
              }    
 
@@ -138,4 +168,7 @@ public class MyItemTouchHandler extends ItemTouchHelper.Callback {
                          return false;
                     }    
                }
+
+
+
     }
