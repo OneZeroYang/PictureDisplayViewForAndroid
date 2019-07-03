@@ -9,11 +9,15 @@ import java.util.List;
  * @param <T>
  */
 public abstract class BasePDPViewAdapter<T> {
-    private List<T> data=null;
+    protected List<T> data=null;
     private int view;
 
     public List<T> getData() {
         return data;
+    }
+
+    public void removeData(int a){
+        data.remove(a);
     }
 
     public int getView() {

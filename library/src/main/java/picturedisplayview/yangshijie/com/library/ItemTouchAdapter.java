@@ -12,16 +12,52 @@ import java.util.List;
 public abstract class ItemTouchAdapter<T> extends MyItemTouchHandler.ItemTouchAdapterImpl {
     private Context context;
     private List<T> list;
+    private boolean isHaveLastView=false;
+    private int lastView=R.layout.lastview;
+
     public ItemTouchAdapter(Context context, List<T> list){
         this.context=context;
         this.list=list;
     }
+
+
+    public List<T> getList() {
+        return list;
+    }
+
+    public void addItme(List<T> list){
+
+        for (int a=0;a<list.size();a++){
+            this.list.add(0,list.get(a));
+            notifyItemChanged(a+list.size());
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position==list.size()-1){
+            return 1;
+        }else {
+            return 0;
+        }
+    }
+
     @NonNull
     @Override
     public BaseMyHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        if (i==1){
+            if (lastView()!=0){
+                View view = LayoutInflater.from(context).inflate(lastView(),viewGroup, false);
+                return new LastMyHolder(view);
+            }
+        }
         View view = LayoutInflater.from(context).inflate(getView(),viewGroup, false);
         return new BaseMyHolder(view);
     }
+
+    protected abstract int lastView();
+
+
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
         if (list==null){
