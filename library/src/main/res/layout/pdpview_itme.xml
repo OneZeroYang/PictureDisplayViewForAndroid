@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:padding="@dimen/dp_2"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-
-
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
     <ImageView
-        android:scaleType="fitXY"
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_90" />
-    <ImageView
-        android:id="@+id/xx"
+        android:layout_height="@dimen/dp_120"
+        android:scaleType="fitXY" />
+
+    <RelativeLayout
+        android:id="@+id/xx_rl"
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"
         android:layout_alignParentRight="true"
-        android:src="@drawable/x"
-        android:layout_width="@dimen/dp_13"
-        android:layout_height="@dimen/dp_13" />
+        android:background="@drawable/xx_rl">
+
+        <ImageView
+            android:id="@+id/xx"
+            android:layout_width="@dimen/dp_13"
+            android:layout_height="@dimen/dp_13"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/x" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

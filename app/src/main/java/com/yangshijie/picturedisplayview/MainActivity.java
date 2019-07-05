@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         myPDPView = (PDPView) findViewById(R.id.myPDPView);
         pdpViewAdapter = new PDPViewAdapter(this, data);
         myPDPView.setAdapter(pdpViewAdapter);
-        myPDPView.setCall(new PDPViewCall() {
+        myPDPView.setCall(new PDPViewCall<Uri>() {
             @Override
             public void addImage() {
                 Log.i(TAG, "addImage: ");
@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onUpdate(List<Object> list) {
-                Log.i(TAG, "onUpdate: ");
+            public void onUpdate(List<Uri> list) {
+                Log.i(TAG, "onUpdate: "+list);
 
             }
         });

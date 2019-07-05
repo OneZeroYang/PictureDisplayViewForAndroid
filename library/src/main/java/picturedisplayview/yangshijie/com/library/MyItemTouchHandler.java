@@ -166,7 +166,13 @@ public class MyItemTouchHandler extends ItemTouchHelper.Callback {
                     // 是否自动开启滑动删除        
                     protected boolean autoOpenSwipe(){            
                          return false;
-                    }    
+                    }
+
+
+                    public void setCall(PDPViewCall call){
+
+                    }
+
                }
 
 

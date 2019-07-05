@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,11 +16,18 @@ public abstract class ItemTouchAdapter<T> extends MyItemTouchHandler.ItemTouchAd
     private boolean isHaveLastView=false;
     private int lastView=R.layout.lastview;
 
+    private PDPViewCall call;
+
     public ItemTouchAdapter(Context context, List<T> list){
         this.context=context;
         this.list=list;
     }
 
+    @Override
+    public void setCall(PDPViewCall call) {
+        super.setCall(call);
+        this.call=call;
+    }
 
     public List<T> getList() {
         return list;
@@ -29,7 +37,12 @@ public abstract class ItemTouchAdapter<T> extends MyItemTouchHandler.ItemTouchAd
 
         for (int a=0;a<list.size();a++){
             this.list.add(0,list.get(a));
-            notifyItemChanged(a+list.size());
+        }
+        for(int a=0;a<this.list.size();a++){
+            notifyItemChanged(a);
+        }
+        if (call!=null){
+            call.onUpdate(this.list);
         }
     }
 
@@ -70,6 +83,7 @@ public abstract class ItemTouchAdapter<T> extends MyItemTouchHandler.ItemTouchAd
         if (list==null){
             throw new RuntimeException("ItemTouchAdapter<T> 数据源为空！");
         }
+
         list.remove(position);
     }
     @Override
@@ -83,9 +97,6 @@ public abstract class ItemTouchAdapter<T> extends MyItemTouchHandler.ItemTouchAd
         }
         return list.size();
     }
-
-
-
     protected abstract int getView();
     protected abstract void BindView(BaseMyHolder holder, int position);
 }

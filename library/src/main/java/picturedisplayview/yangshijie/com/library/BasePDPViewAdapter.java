@@ -28,10 +28,6 @@ public abstract class BasePDPViewAdapter<T> {
        this.data=data;
         view=setView();
     }
-
     protected abstract int setView();
-
-
-
     public abstract void BindView(BaseMyHolder holder, int position);
 }

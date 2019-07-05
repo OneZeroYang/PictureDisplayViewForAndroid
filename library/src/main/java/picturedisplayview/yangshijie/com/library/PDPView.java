@@ -30,6 +30,9 @@ public class PDPView<T> extends RelativeLayout implements MyItemTouchHandlerCall
 
     public void setCall(PDPViewCall call) {
         this.call = call;
+        if (itemTouchAdapter!=null){
+            itemTouchAdapter.setCall(call);
+        }
     }
 
     public void setLastView(int lastView) {
@@ -61,11 +64,12 @@ public class PDPView<T> extends RelativeLayout implements MyItemTouchHandlerCall
     }
 
     public void setAdapter(BasePDPViewAdapter adapter) {
+
         if (adapter == null) {
             return;
         }
         if (adapter instanceof PDPViewAdapter) {
-            this.layout = new GridLayoutManager(context, 4);
+            this.layout = new GridLayoutManager(context, 3);
             PDPViewAdapterCall pdpViewAdapterCall = new PDPViewAdapterCall() {
                 @Override
                 public void add() {
@@ -131,7 +135,7 @@ public class PDPView<T> extends RelativeLayout implements MyItemTouchHandlerCall
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(myItemTouchHandler);
         itemTouchHelper.attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(itemTouchAdapter);
-        onUpdateCall();
+
     }
 
     private void onUpdateCall(){
@@ -146,7 +150,7 @@ public class PDPView<T> extends RelativeLayout implements MyItemTouchHandlerCall
             @Override
             protected int lastView() {
                 if (adapter instanceof PDPViewAdapter) {
-                    return R.layout.lastview;
+                    return lastView;
                 }
                 return 0;
             }
@@ -160,6 +164,10 @@ public class PDPView<T> extends RelativeLayout implements MyItemTouchHandlerCall
                 adapter.BindView(holder, position);
             }
         };
+
+        if (this.call!=null){
+            this.itemTouchAdapter.setCall(this.call);
+        }
 
     }
 

@@ -16,6 +16,8 @@ public class PDPViewAdapter<T> extends BasePDPViewAdapter<T> {
 
     private PDPViewAdapterCall<T> call;
 
+
+
     public void setCall(PDPViewAdapterCall call) {
         this.call = call;
     }
@@ -55,12 +57,12 @@ public class PDPViewAdapter<T> extends BasePDPViewAdapter<T> {
            });
 
         } else {
-            View view = holder.findView(R.id.xx);
+            View view = holder.findView(R.id.xx_rl);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (call!=null){
-                        call.event(holder,R.id.xx,position);
+                        call.event(holder,R.id.xx,holder.getAdapterPosition());
                     }
                 }
             });
@@ -77,6 +79,5 @@ public class PDPViewAdapter<T> extends BasePDPViewAdapter<T> {
             });
         }
     }
-
 
 }
