@@ -130,3 +130,10 @@ PDPView<br> xml用法:
 }
 
 
+相关接口 setLastView(int lastView) 设置最后一个布局，通常为添加图片<br>
+        setAnimationCoefficient(float animationCoefficient) 设置长按和松开时的放大缩小动画参数1为不变 越大放大的动画越大<br>
+	setAnimationTime(int animationTime)设置动画时间<br>
+	setOpenAnimation(boolean openAnimation)是否开启动画<br>
+	
+
+
